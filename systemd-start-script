@@ -1,0 +1,13 @@
+[Unit]
+Description=Start app as a daemon
+Requires=network-online.target
+After=network.target
+
+[Service]
+User=nobody
+ExecStart=/usr/bin/ruby /app/threerier/app.rb
+KillSignal=SIGUSR2
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

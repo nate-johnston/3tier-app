@@ -1,0 +1,7 @@
+adapter: mysql2
+hostname: <insert hostname here>
+username: <insert username here>
+password: <insert password here>
+database: <insert database name here>
+pool: 5
+timeout: 5000
