@@ -7,7 +7,7 @@ echo "Installing bundler..."
 ${GEM} install bundler --no-ri --no-rdoc
 echo
 echo "Bundle Install..."
-cd /app/threerier
+cd /app/threetier
 BUNDLER="`${GEM} environment | grep 'EXECUTABLE DIRECTORY' | awk '{print $4}'`/bundler"
 ${BUNDLER} install
 echo
