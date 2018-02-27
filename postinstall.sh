@@ -3,10 +3,17 @@ GEM=`/usr/bin/dpkg -L ruby | grep bin/gem | head -1`
 echo "The package was installed!  Yay!" > /etc/wowza
 cat /etc/wowza
 echo
-echo "Installing bundler..."
+echo "Install of bundler running (${GEM} install bundler)"
+if [ -z "$GEM" ]; then
+    echo "Can not find gem!"
+    exit 1
+fi
+if [ ! -f $GEM ]; then
+    echo "No such file: $GEM"
+    exit 2
+fi
 ${GEM} install bundler 
 echo
-echo "Bundle Install..."
 cd /app/threetier
 BUNDLER_DIR="`${GEM} environment | grep 'EXECUTABLE DIRECTORY' | awk '{print $4}'`"
 if [ -z "$BUNDLER_DIR" ]; then
@@ -18,6 +25,7 @@ if [ ! -f $BUNDLER ]; then
     echo "No such file: $BUNDLER"
     exit 2
 fi
+echo "Bundle Install running (${BUNDLER} install)"
 ${BUNDLER} install
 echo
 echo "Setting up systemd..."
