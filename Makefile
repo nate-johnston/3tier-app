@@ -1,5 +1,5 @@
 NAME=3tier-app
-VERSION=1.0.6
+VERSION=1.0.8
 REVISION=0
 PREFIX=/app/threetier
 TARGET_DIR=.
@@ -16,7 +16,7 @@ test:
 	@rspec
 
 package: clean
-	@fpm -s dir -t deb -d nginx -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . 
+	@fpm -s dir -t deb -d ruby -n $(NAME) -v $(VERSION) --iteration $(REVISION) --prefix $(PREFIX) -C $(TARGET_DIR) --after-install $(POSTINSTALL) . 
 
 publish: package
 	deb-s3 upload -b debs3test --s3-region=us-east-2 $(PACKAGE)

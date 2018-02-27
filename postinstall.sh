@@ -1,8 +1,10 @@
 export PATH=$PATH:/usr/local/bin:/app/interpreters/ruby/1.9.3/bin
-GEM=`/usr/bin/dpkg -L ruby | grep bin/gem | head -1`
 echo "The package was installed!  Yay!" > /etc/wowza
 cat /etc/wowza
+echo "DEBUG: List all files installed by ruby package"
+/usr/bin/dpkg -L ruby
 echo
+GEM=`/usr/bin/dpkg -L ruby | grep bin/gem | head -1`
 echo "Install of bundler running (${GEM} install bundler)"
 if [ -z "$GEM" ]; then
     echo "Can not find gem!"
