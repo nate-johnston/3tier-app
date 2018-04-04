@@ -1,11 +1,11 @@
 NAME=3tier-app
-VERSION=1.0.9
+VERSION=1.0.10
 REVISION=0
 PREFIX=/app/threetier
 TARGET_DIR=.
 PACKAGE=$(NAME)_$(VERSION)-$(REVISION)_amd64.deb
 POSTINSTALL=postinstall.sh
-DEPENDENCIES="ruby,ruby-dev,libmysqlclient20"
+DEPENDENCIES="gcc,ruby,ruby-dev,libmysqlclient20"
 
 .PHONY: publish
 
