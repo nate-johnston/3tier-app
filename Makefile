@@ -5,7 +5,7 @@ PREFIX=/app/threetier
 TARGET_DIR=.
 PACKAGE=$(NAME)_$(VERSION)-$(REVISION)_amd64.deb
 POSTINSTALL=postinstall.sh
-DEPENDENCIES="gcc,ruby,ruby-dev,libmysqlclient20,libmysqlclient-dev"
+DEPENDENCIES="gcc,ruby,ruby-dev,libmysqlclient20,libmysqlclient-dev,make"
 
 .PHONY: publish
 
