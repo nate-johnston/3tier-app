@@ -1,5 +1,5 @@
 NAME=3tier-app
-VERSION=1.0.11
+VERSION=1.0.12
 REVISION=0
 PREFIX=/app/threetier
 TARGET_DIR=.
