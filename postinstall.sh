@@ -38,6 +38,6 @@ echo "Systemctl: starting threetier"
 /bin/systemctl start threetier.service
 sleep 5
 echo "Systemctl: checking status of threetier"
-/bin/systemctl status threetier.service
+#/bin/systemctl status threetier.service
 echo "Exiting"
 exit 0
