@@ -8,6 +8,7 @@ User=nobody
 ExecStart=/usr/bin/ruby /app/threetier/app.rb
 KillSignal=SIGUSR2
 Restart=always
+WorkingDirectory=/app/threetier
 
 [Install]
 WantedBy=multi-user.target
