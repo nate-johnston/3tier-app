@@ -1,7 +1,8 @@
 adapter: mysql2
 database: <%= ENV["APP_DATABASE_DBNAME"] %>
-hostname: <%= ENV["APP_DATABASE_HOSTNAME"] %>
+host: <%= ENV["APP_DATABASE_HOSTNAME"] %>
 username: <%= ENV["APP_DATABASE_USERNAME"] %>
 password: <%= ENV["APP_DATABASE_PASSWORD"] %>
+encoding: unicode
 pool: 5
 timeout: 5000
