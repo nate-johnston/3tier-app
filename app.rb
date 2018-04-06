@@ -4,16 +4,21 @@ require 'json'
 require 'sinatra/activerecord'
 require 'sinatra'
 
-class User < ActiveRecord::Base
+class Application < Sinatra::Base
+  register Sinatra::ActiveRecordExtension
+end
 
+class User < ActiveRecord::Base
+  validates_presence_of :name
 end
 
 get '/' do
-   "Test page"
+   p "Test page"
 end
 
 get '/users' do
   @users = User.all
+  print @users
   erb :index
 end
 

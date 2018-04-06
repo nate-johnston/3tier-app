@@ -1,4 +1,5 @@
 *.gem
+*.deb
 config/database.yml
 *.rbc
 /.config
