@@ -20,7 +20,8 @@ end
 get '/users' do
   @users = User.all
   print @users
-  erb :index
+  #erb :index
+  JSON.generate(@users)
 end
 
 get '/users/:id' do
