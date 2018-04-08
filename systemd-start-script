@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 User=nobody
-ExecStart=/usr/bin/ruby /app/threetier/app.rb
+ExecStart=/usr/bin/ruby /app/threetier/app.rb -p 80
 KillSignal=SIGUSR2
 Restart=always
 WorkingDirectory=/app/threetier

@@ -1,6 +1,5 @@
+#\ -p 80
 # myapp.rb
-#
-set :port, 80
 
 require 'json'
 require 'sinatra/activerecord'
