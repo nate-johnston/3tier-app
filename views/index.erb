@@ -1,13 +1,1 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Users</title>
-</head>
-<body>
-    <ul>
-        <% @users.each do |user| %>
-            <li>User <%= user.id %> is <%= user.name %></li>
-        <% end %>
-    </ul>
-</body>
-</html>
+[<% @users.each do |user| %>{"id":<%= user.id %>,"name":<%= user.name %><% end %>]
