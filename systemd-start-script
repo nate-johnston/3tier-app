@@ -4,7 +4,7 @@ Requires=network-online.target
 After=network.target
 
 [Service]
-User=nobody
+User=root
 ExecStart=/usr/bin/ruby /app/threetier/app.rb -p 80
 KillSignal=SIGUSR2
 Restart=always
