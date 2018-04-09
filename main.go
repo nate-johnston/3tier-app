@@ -1,14 +1,14 @@
 package main
 
 import (
-	"database/sql"
-	"encoding/json"
-	"flag"
-	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"net/http"
-	"runtime/debug"
+	"flag"
 	"strconv"
+	"fmt"
+	"database/sql"
+	"runtime/debug"
+	"encoding/json"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 var (
@@ -16,8 +16,8 @@ var (
 
 	dbUsername = flag.String("db-username", "", "username db")
 	dbPassword = flag.String("db-password", "", "password db")
-	dbHost     = flag.String("db-host", "", "host db")
-	dbPort     = flag.Int("db-port", 3306, "port db")
+	dbHost = flag.String("db-host", "", "host db")
+	dbPort = flag.Int("db-port", 3306, "port db")
 	dbDatabase = flag.String("db-database", "", "database db")
 
 	conn *sql.DB
@@ -36,18 +36,14 @@ func main() {
 		panic(err)
 	}
 
-	panic(http.ListenAndServe(":"+strconv.Itoa(*port), http.HandlerFunc(ListUsers)))
+	panic(http.ListenAndServe(":" + strconv.Itoa(*port), http.HandlerFunc(ListUsers)))
 }
 
 func ListUsers(response http.ResponseWriter, request *http.Request) {
+	print("adding header\n")
 	response.Header().Add("Access-Control-Allow-Origin", "*")
+	print("added header\n")
 	result, err := conn.QueryContext(request.Context(), "SELECT * FROM users")
-	if err != nil {
-		writeErr(response, err)
-		return
-	}
-
-	cols, err := result.Columns()
 	if err != nil {
 		writeErr(response, err)
 		return
@@ -56,6 +52,12 @@ func ListUsers(response http.ResponseWriter, request *http.Request) {
 	var out []map[string]interface{}
 
 	for result.Next() {
+		cols, err := result.Columns()
+		if err != nil {
+			writeErr(response, err)
+			return
+		}
+
 		row := make([]interface{}, len(cols))
 
 		{
@@ -72,13 +74,34 @@ func ListUsers(response http.ResponseWriter, request *http.Request) {
 
 		rowNamed := make(map[string]interface{})
 		for i, name := range cols {
-			rowNamed[name] = row[i]
+			v := row[i]
+
+			//try to convert []byte to string
+			var data interface{}
+			switch s := v.(type) {
+			case []byte:
+				data = string(s)
+			default:
+				data = s
+			}
+
+			// if it's a string, try to convert it to a number
+			if s, ok := data.(string); ok {
+				number, err := strconv.ParseInt(s, 10, 64)
+				if err == nil {
+					data = number
+				}
+			}
+
+			rowNamed[name] = data
 		}
 
 		out = append(out, rowNamed)
-		print("read row\n")
 	}
-	print("no row\n")
+
+	if out == nil {
+		out = make([]map[string]interface{}, 0)
+	}
 
 	response.Header().Add("Content-Type", "application/json")
 	response.WriteHeader(200)
@@ -93,3 +116,4 @@ func writeErr(response http.ResponseWriter, err error) {
 	response.WriteHeader(500)
 	response.Write([]byte(err.Error()))
 }
+
