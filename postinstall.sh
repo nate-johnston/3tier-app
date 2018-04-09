@@ -1,5 +1,4 @@
 export PATH=$PATH:/usr/local/bin:/app/interpreters/ruby/1.9.3/bin
-apt-get install -y golang-go
 echo "The package was installed!  Yay!" > /etc/wowza
 cat /etc/wowza
 
