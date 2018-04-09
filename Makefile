@@ -11,7 +11,7 @@ DEPENDENCIES="make,mysql-client"
 
 build:
 	@go get github.com/go-sql-driver/mysql
-	@go build -v -o 3tier-app || true
+	@go build -v -o 3tier-app 
 
 clean:
 	@rm -f $(PACKAGE) || true
