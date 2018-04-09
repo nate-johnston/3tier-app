@@ -11,6 +11,10 @@ end
 
 class User < ActiveRecord::Base
   validates_presence_of :name
+
+  def to_json(*a)
+    { :id => @id, :name => @name }.to_json(*a)
+  end
 end
 
 get '/' do
@@ -18,10 +22,12 @@ get '/' do
 end
 
 get '/users' do
-  @users = User.all
-  print @users
-  #erb :index
-  JSON.generate(Array.new(User.all))
+  body = ""
+  User.all.each do |thisuser|
+    body << thisuser.to_json.to_s
+    body << ','
+  end
+  p "[#{body.chop}]"
 end
 
 get '/users/:id' do
