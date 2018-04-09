@@ -30,18 +30,18 @@ func main() {
 	dbAddr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", *dbUsername, *dbPassword, *dbHost, *dbPort, *dbDatabase)
 
 	var err error
+
 	conn, err = sql.Open("mysql", dbAddr)
 	if err != nil {
 		panic(err)
 	}
 
 	panic(http.ListenAndServe(":"+strconv.Itoa(*port), http.HandlerFunc(ListUsers)))
-
 }
 
 func ListUsers(response http.ResponseWriter, request *http.Request) {
 	response.Header().Add("Access-Control-Allow-Origin", "*")
-	result, err := conn.Query("SELECT * FROM users")
+	result, err := conn.QueryContext(request.Context(), "SELECT * FROM users")
 	if err != nil {
 		writeErr(response, err)
 		return
@@ -56,10 +56,18 @@ func ListUsers(response http.ResponseWriter, request *http.Request) {
 	var out []map[string]interface{}
 
 	for result.Next() {
-		var row []interface{}
-		if err = result.Scan(&row); err != nil {
-			writeErr(response, err)
-			return
+		row := make([]interface{}, len(cols))
+
+		{
+			ptrs := make([]interface{}, len(row))
+			for i := range row {
+				ptrs[i] = &row[i]
+			}
+
+			if err = result.Scan(ptrs...); err != nil {
+				writeErr(response, err)
+				return
+			}
 		}
 
 		rowNamed := make(map[string]interface{})
@@ -68,9 +76,9 @@ func ListUsers(response http.ResponseWriter, request *http.Request) {
 		}
 
 		out = append(out, rowNamed)
-		print("read row")
+		print("read row\n")
 	}
-	print("no row")
+	print("no row\n")
 
 	response.Header().Add("Content-Type", "application/json")
 	response.WriteHeader(200)
