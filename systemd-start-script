@@ -5,7 +5,8 @@ After=network.target
 
 [Service]
 User=root
-ExecStart=/usr/bin/ruby /app/threetier/app.rb -p 80 -o 0.0.0.0
+ExecStart=/app/threetier/3tier-app -db-username="demo_user" -db-password="sensory-emaciate-general-hatter" -db-host="demo.cdhrvlig59bk.us-east-2.rds.amazonaws.com" -db-port=3306 -db-database="threetier"
+#ExecStart=/usr/bin/ruby /app/threetier/app.rb -p 80 -o 0.0.0.0
 KillSignal=SIGUSR2
 Restart=always
 WorkingDirectory=/app/threetier

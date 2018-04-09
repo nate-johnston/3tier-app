@@ -1,6 +1,7 @@
 *.gem
 *.deb
 config/database.yml
+3tier-app
 *.rbc
 /.config
 /coverage/
