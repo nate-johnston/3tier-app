@@ -4,12 +4,12 @@
 require 'json'
 require 'sinatra/activerecord'
 require 'sinatra'
-require "sinatra/cors"
-require "sinatra/json"
+#require "sinatra/cors"
+#require "sinatra/json"
 
 class App < Sinatra::Base
   register Sinatra::ActiveRecordExtension
-  register Sinatra::Cors
+#  register Sinatra::Cors
   set :allow_origin, "http://example.com http://foo.com"
   set :allow_methods, "GET,HEAD,POST"
   set :allow_headers, "content-type,if-modified-since"
