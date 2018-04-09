@@ -1,5 +1,5 @@
 NAME=3tier-app
-VERSION=1.0.32
+VERSION=1.0.33
 REVISION=0
 PREFIX=/app/threetier
 TARGET_DIR=.
@@ -11,7 +11,7 @@ DEPENDENCIES="gcc,ruby,ruby-dev,libmysqlclient20,libmysqlclient-dev,make,mysql-c
 
 build:
 	@go get github.com/go-sql-driver/mysql
-	@go build || true
+	@go build -v -o 3tier-app || true
 
 clean:
 	@rm -f $(PACKAGE) || true
